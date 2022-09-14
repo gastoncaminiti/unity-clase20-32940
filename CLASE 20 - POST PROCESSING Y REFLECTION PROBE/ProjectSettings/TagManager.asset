@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Floor
+  - Goal
+  - Trampoline
+  - Munitions
+  - Weapons
+  - Powerups
+  - Building
   layers:
   - Default
   - TransparentFX
@@ -33,8 +40,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - FP Camera
+  - PP Camera
   - 
   - 
   m_SortingLayers:

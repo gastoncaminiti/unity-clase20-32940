@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System;
 
 public class PlayerCollision : MonoBehaviour
@@ -14,6 +15,9 @@ public class PlayerCollision : MonoBehaviour
 
     public static event Action OnDead;
     public static event Action<float> OnChangeHP;
+
+    public UnityEvent InBuilding;
+    public UnityEvent OutBuilding;
 
     private void Start()
     {
@@ -114,18 +118,28 @@ public class PlayerCollision : MonoBehaviour
         {
             PlayerEvents.OnWinCall();
         }
+
+        if (other.gameObject.CompareTag("Building"))
+        {
+            InBuilding?.Invoke();
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-
+        if (other.gameObject.CompareTag("Building"))
+        {
+            OutBuilding?.Invoke();
+        }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnParticleCollision(GameObject other)
     {
-
+        playerData.Damage(0.1f);
+        PlayerCollision.OnChangeHP?.Invoke(playerData.HP);
     }
 
+    /*
     //CUANDO UN MOUSE INGRESA A UN COLLIDER
     private void OnMouseEnter()
     {
@@ -144,10 +158,7 @@ public class PlayerCollision : MonoBehaviour
         HUDManager.Instance.SetSelectedText(" CLICKED ");
 
     }
+    */
 
-    private void OnParticleCollision(GameObject other)
-    {
-        playerData.Damage(0.1f);
-        PlayerCollision.OnChangeHP?.Invoke(playerData.HP);
-    }
+
 }
